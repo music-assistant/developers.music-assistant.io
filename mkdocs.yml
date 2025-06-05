@@ -1,0 +1,83 @@
+site_name: Music Assistant Developer
+site_url: https://developers.music-assistant.io/
+
+#repo_name: music-assistant
+#repo_url: https://github.com/music-assistant
+
+nav:
+  - Home: index.md
+
+theme:
+  custom_dir: overrides
+  favicon: assets/favicon-blue.png
+  logo: assets/transparent-logo.png
+  name: material
+  font:
+    text: Roboto
+    code: JetBrains Mono
+
+  features:
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.top
+
+    - toc.integrate
+
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  language: en
+  palette:
+    scheme: music-assistant
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - social:
+      cards_layout_options:
+        font_family: JetBrains Mono
+  - search:
+  - minify:
+      minify_html: true
+extra:
+  social:
+    - icon: ohf-logo-colour
+      link: https://www.openhomefoundation.org/
+      name: MA is a project from the Open Home Foundation
+    - icon: fontawesome/brands/github
+      link: https://github.com/music-assistant
+      name: Music Asisstant on Github
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/kaVm8hGpne
+      name: Music Assistant on Discord
+    - icon: lokalise-logo-colour
+      link: https://lokalise.com/
+      name: Translations by Lokalise
+    #- icon: fontawesome/brands/dev
+    #  link: ./developer-docs/dev-docs/
+    #  name: Developer Docs
+
+markdown_extensions:
+  - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.mark
+  - attr_list
+  - pymdownx.magiclink
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+copyright: |
+  &copy; 2025 <a href="https://www.openhomefoundation.org/"  target="_blank" rel="noopener">Open Home Foundation</a>
