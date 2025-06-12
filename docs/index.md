@@ -62,20 +62,20 @@ Add a new folder to the `providers` folder with the name of provider. Add two fi
 
 **Configuring the manifest.json file**
 
-The easiest way to get start is to copy the contents of the manifest of an existing Music Provider, e.g. Spotify or Youtube Music. See [the manifest section](#⚙️-manifest-file) for all available properties.
+The easiest way to get start is to copy the contents of the manifest of an existing Music Provider, e.g. Spotify or Youtube Music. See [the manifest section](#manifest-file) for all available properties.
 
 **Creating the provider**
 
-Create a file called `__init__.py` inside the folder of your provider. This file will contain the logic for the provider. All Music Providers must inherit from the [`MusicProvider`](https://github.com/music-assistant/server/music_assistant/models/music_provider.py) base class and override the necessary functions where applicable. A few things to note:
+Create a file called `__init__.py` inside the folder of your provider. This file will contain the logic for the provider. All Music Providers must inherit from the [`MusicProvider`](https://github.com/music-assistant/server/blob/dev/music_assistant/models/music_provider.py) base class and override the necessary functions where applicable. A few things to note:
 * The `setup()` function is called by Music Assistant upon initialization of the provider. It gives you the opportunity the prepare the provider for usage. For example, logging in a user or obtaining a token can be done in this function.
 * A provider should let Music Assistant know which [`ProviderFeature`](https://github.com/music-assistant/models/blob/main/music_assistant_models/enums.py) it supports by implementing the property `supported_features`, which returns a list of `ProviderFeature`.
 * The actual playback of audio in Music Assistant happens in two phases:
     1. `get_stream_details()` is called to obtain information about the audio, like the quality, format, # of channels etc.
-    2. `get_audio_stream()` is called to stream raw bytes of audio to the player. There are a few [helpers](https://github.com/music-assistant/server/music_assistant/helpers/audio.py) to help you with this. Note that this function is not applicable to direct url streams.
+    2. `get_audio_stream()` is called to stream raw bytes of audio to the player. There are a few [helpers](https://github.com/music-assistant/server/blob/dev/music_assistant/helpers/audio.py) to help you with this. Note that this function is not applicable to direct url streams.
 * Examples:
-    1. Streaming raw bytes using an external executable (librespot) to get audio, see the [Spotify](https://github.com/music-assistant/server/music_assistant/providers/spotify/__init__.py) provider as an example
-    2. Streaming a direct URL, see the [Youtube Music](https://github.com/music-assistant/server/music_assistant/providers/ytmusic/__init__.py) provider as an example
-    3. Streaming an https stream that uses an expiring URL, see the [Qobuz](https://github.com/music-assistant/server/music_assistant/providers/qobuz/__init__.py) provider as an example
+    1. Streaming raw bytes using an external executable (librespot) to get audio, see the [Spotify](https://github.com/music-assistant/server/blob/dev/music_assistant/providers/spotify/__init__.py) provider as an example
+    2. Streaming a direct URL, see the [Youtube Music](https://github.com/music-assistant/server/blob/dev/music_assistant/providers/ytmusic/__init__.py) provider as an example
+    3. Streaming an https stream that uses an expiring URL, see the [Qobuz](https://github.com/music-assistant/server/blob/dev/music_assistant/providers/qobuz/__init__.py) provider as an example
 
 
 ## ▶️ Building your own Player Provider
