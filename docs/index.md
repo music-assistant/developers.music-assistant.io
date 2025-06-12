@@ -48,9 +48,6 @@ In most cases, you won't need to modify the models. However, if you do need to m
 The Music Assistant server is fully built in Python. The Python language has no real supported for multi-threading. This is why Music Assistant heavily relies on asyncio to handle blocking IO. It is important to get a good understanding of asynchronous programming before building your first provider. [This](https://www.youtube.com/watch?v=M-UcUs7IMIM) video is an excellent first step in the world of asyncio.
 
 
-
-
-
 ## Building a new Music Provider
 A Music Provider is the provider type that adds support for a 'source of music' to Music Assistant. Spotify and Youtube Music are examples of a Music Provider, but also Filesystem and SMB can be put in the Music Provider category. All Providers (of all types) can be found in the `music_assistant/providers` folder.
 
@@ -82,19 +79,24 @@ Create a file called `__init__.py` inside the folder of your provider. This file
 
 
 ## ▶️ Building your own Player Provider
+
 A Player Provider is the provider type that adds support for a 'target of playback' to Music Assistant. Sonos, Chromecast and AirPlay are examples of a Player Provider.
 All Providers (of all types) can be found in the `music_assistant/providers` folder.
 
 TIP: We have created a template/stub provider in `music_assistant/providers/_template_player_provider` to get you started fast!
 
 ## 💽 Building your own Metadata Provider
+
 Will follow soon™
 
 ## 🔌 Building your own Plugin Provider
+
 Will follow soon™
 
 ## ⚙️ Manifest file
+
 The manifest file contains metadata and configuration about a provider. The supported properties are:
+
 | Name  | Description  | Type  |
 |---|---|---|
 | type  | `music`, `player`, `metadata` or `plugin`  | string  |
