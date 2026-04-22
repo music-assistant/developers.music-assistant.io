@@ -91,11 +91,15 @@ TIP: We have created a template/stub provider in `music_assistant/providers/_tem
 
 ## 💽 Building your own Metadata Provider
 
-Will follow soon™
+A Metadata Provider is the provider type that provides additional metadata which is missing from the preliminary items obtained from the music provider sources. They supplement metadata in the Music Assistant server database by importing information or album artwork from other online sources that are then added to the library. For example, the metadata providers for MusicBrainz, fanart.tv, and Cover Art Archive. Note that metadata providers do NOT change anything (e.g. ID3 tags) obtained from the original item.
+
+More information and template/stub demo metadata provider to follow.
 
 ## 🔌 Building your own Plugin Provider
 
-Will follow soon™
+A Plugin Provider is the provider type that provides additional functionality to Music Assistant and most often it will interact with the existing core controllers and event logic. For example a music scrobbling plugin such as the [LastFM Scrobbler Plugin](https://www.music-assistant.io/plugins/lastfm_scrobble/) (that lets you [scrobble](https://www.collinsdictionary.com/dictionary/english/scrobble) songs and albums you listen to LastFM and LibreFM), or the [AirPlay Receiver Plugin](https://www.music-assistant.io/plugins/airplay-receiver/) (that enable you to add AirPlay Receiver audio support to any MA player), or the [Home Assistant Plugin Provider](https://www.music-assistant.io/ha-plugin/) (that provides a connection from the Music Assistant integration running in Home Assistant to Music Assistant server that allow exposing HA players so that they become visible in MA).
+
+More information and template/stub demo plugin provider to follow.
 
 ## ⚙️ Manifest file
 
