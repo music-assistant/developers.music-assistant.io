@@ -54,7 +54,7 @@ The Music Assistant server is fully built in Python. The Python language has no 
 
 A Music Provider is the provider type that adds support for a 'source of music' to Music Assistant. Spotify and Youtube Music are examples of a Music Provider, but also Filesystem and SMB can be put in the Music Provider category. All Providers (of all types) can be found in the `music_assistant/providers` folder.
 
-TIP: We have created a template/stub provider in `music_assistant/providers/_template_music_provider` to get you started fast!
+TIP: We have created a template/stub ["Demo Music Provider"](https://github.com/music-assistant/server/tree/dev/music_assistant/providers/_demo_music_provider) implementation in `music_assistant/providers/_demo_music_provider` to help you get started faster with building your new Music Provider for Music Assistant server!
 
 **Adding the necessary files for a new Music Provider**
 
@@ -87,7 +87,7 @@ Create a file called `__init__.py` inside the folder of your provider. This file
 A Player Provider is the provider type that adds support for a 'target of playback' to Music Assistant. Sonos, Chromecast and AirPlay are examples of a Player Provider.
 All Providers (of all types) can be found in the `music_assistant/providers` folder.
 
-TIP: We have created a template/stub provider in `music_assistant/providers/_template_player_provider` to get you started fast!
+TIP: We have created a template/stub ["Demo Player Provider"](https://github.com/music-assistant/server/tree/dev/music_assistant/providers/_demo_player_provider) implementation" in `music_assistant/providers/_template_player_provider` to help get you started faster with building your own Player Provider for Music Assistant server!
 
 ## 💽 Building your own Metadata Provider
 
