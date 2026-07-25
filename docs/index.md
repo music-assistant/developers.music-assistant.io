@@ -71,7 +71,8 @@ The easiest way to get start is to copy the contents of the manifest of an exist
 
 Create a file called `__init__.py` inside the folder of your provider. This file will contain the logic for the provider. All Music Providers must inherit from the [`MusicProvider`](https://github.com/music-assistant/server/blob/dev/music_assistant/models/music_provider.py) base class and override the necessary functions where applicable. A few things to note:
 
-- The `setup()` function is called by Music Assistant upon initialization of the provider. It gives you the opportunity the prepare the provider for usage. For example, logging in a user or obtaining a token can be done in this function.
+- The `setup()` function is called by Music Assistant upon initialization of the provider. It gives you the opportunity the prepare the provider for usage.
+- Anything interactive (credentials, OAuth logins, pairing) belongs in a [setup flow](setup-flows.md); runtime options are declared by overriding `get_config_entries()` on the provider.
 - A provider should let Music Assistant know which [`ProviderFeature`](https://github.com/music-assistant/models/blob/main/music_assistant_models/enums.py) it supports by implementing the property `supported_features`, which returns a list of `ProviderFeature`.
 - The actual playback of audio in Music Assistant happens in two phases:
     1. `get_stream_details()` is called to obtain information about the audio, like the quality, format, # of channels etc.
@@ -112,12 +113,8 @@ The manifest file contains metadata and configuration about a provider. The supp
 | name  | The full name of the provider, e.g. `Spotify` or `Youtube Music`  | string  |
 | description  | The full description of the provider  | string  |
 | codeowners  | List of Github names of the codeowners of the provider  | array[string]  |
-| config_entries  | List of configurable properties for the provider, e.g. `username` or `password`*. | array[object]  |
-| config_entries.key  | The unique key of the config entry, used to obtain the value in the provider code  | string  |
-| config_entries.type  | The type of the config entry. Possible values: `string`, `secure_string` (for passwords), `boolean`, `float`, `integer`, `label` (for a single line of text in the settings page)  | string  |
-| config_entries.label | The label of the config entry. Used in the settings page | string |
 | requirements | List of requirements for the provider in pip string format. Supported values are `package==version` and `git+https://gitrepoforpackage` | array[string]
 | documentation | URL to the Github discussion containing the documentation for the provider. | string |
 | multi_instances | Whether multiple instances of the configuration are supported, e.g. multiple user accounts for Spotify | boolean |
 
-\* These `config_entries` are used to automatically generate the settings page for the provider in the front-end. The values can be obtained via `self.config.get_value(key)`.
+Provider configuration is not declared in the manifest: interactive setup (credentials, OAuth, pairing) is authored as a [setup flow](setup-flows.md), and runtime options are declared in code by overriding `get_config_entries()` — see [Provider setup flows](setup-flows.md).
