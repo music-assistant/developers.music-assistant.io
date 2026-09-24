@@ -102,6 +102,16 @@ A Plugin Provider is the provider type that provides additional functionality to
 
 More information and template/stub demo plugin provider to follow.
 
+## Building your own Audio Analysis Provider
+
+An Audio Analysis Provider is the provider type that "listens" to the audio itself and derives information from it, such as loudness, tempo (BPM), beat and downbeat positions, musical key, energy and mood, or an audio fingerprint. The results are stored in the Music Assistant database per track and are then used by other parts of Music Assistant, for example volume normalization, smart crossfades, "similar tracks" and mood-based playlists, or metadata matching. Examples are the [Loudness Analysis](https://www.music-assistant.io/audio-analysis/loudness-analysis/), [Smart Fades](https://www.music-assistant.io/audio-analysis/smart-fades/), [Sonic Analysis](https://www.music-assistant.io/audio-analysis/sonic-analysis/) and [AcoustID Lookup](https://www.music-assistant.io/audio-analysis/acoustid/) providers. All Providers (of all types) can be found in the `music_assistant/providers` folder.
+
+Note that an Audio Analysis Provider never produces or changes the audio that is played. It only receives a copy of the decoded audio and returns data about it.
+
+TIP: We have created a template/stub "[Demo Audio Analysis Provider](https://github.com/music-assistant/server/tree/dev/music_assistant/providers/_demo_audio_analysis_provider)" demonstation/reference implementation in `music_assistant/providers/_demo_audio_analysis_provider` to help you get started faster with building your own Audio Analysis Provider for Music Assistant server!
+
+More information to follow.
+
 ## ⚙️ Manifest file
 
 The manifest file contains metadata and configuration about a provider. The supported properties are:
