@@ -4,11 +4,11 @@ Developer docs
 ## 📝 Prerequisites
 
 - ffmpeg (minimum version 6.1, version 7 recommended), must be available in the path so install at OS level
-- Python 3.12 is minimal required, 3.12 recommended (or check the pyproject for current required version)
+- Python 3.14 is minimal required, 3.14 recommended (or check the [pyproject](https://github.com/music-assistant/server/blob/dev/pyproject.toml) for current required version)
 - [Python venv](https://docs.python.org/3/library/venv.html)
 
 We recommend developing on a (recent) macOS or Linux machine.
-It is recommended to use Visual Studio Code as your IDE, since launch files to start Music Assistant are provided as part of the repository. Furthermore, the current code base is not verified to work on a native Windows machine. If you would like to develop on a Windows machine, install [WSL2](https://code.visualstudio.com/blogs/2019/09/03/wsl2) to increase your swag-level 🤘.
+It is recommended to use Visual Studio Code as your IDE, since launch files to start Music Assistant are provided as part of the repository. Furthermore, the current code base is not verified to work on a native Windows machine. If you would like to develop on a Windows machine, install [WSL 2](https://code.visualstudio.com/blogs/2019/09/03/wsl2) ([Windows Subsystem for Linux 2](https://devblogs.microsoft.com/commandline/announcing-wsl-2/)) to increase your swag-level 🤘.
 
 ## 🚀 Setting up your development environment
 
