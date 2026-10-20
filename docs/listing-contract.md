@@ -4,6 +4,10 @@ Music Assistant listing commands share a contract for sorting, filtering and pag
 is authoritative for which sort fields each listing supports; clients should discover those
 options instead of assuming that every listing offers the same fields.
 
+The contract ships with server 2.11. Older servers do not have `music/sort_options` or the typed
+sort arguments. The Python client checks the minimum API schema for each argument and raises
+`InvalidServerVersion` when the server is too old.
+
 ## Discover sort options
 
 Call `music/sort_options` with a `ListingType`. The response is a list of `SortOptionInfo` values;
@@ -14,18 +18,20 @@ supported, and its default direction when applicable.
 from music_assistant_models.enums import ListingType, SortDirection, SortField
 
 options = await client.music.get_sort_options(ListingType.LIBRARY_TRACKS)
+by_name = next((o for o in options if o.field == SortField.NAME), options[0])
 tracks = await client.music.get_library_tracks(
     limit=100,
     offset=0,
-    sort_field=SortField.NAME,
-    sort_direction=SortDirection.ASC,
+    sort_field=by_name.field,
+    sort_direction=SortDirection.ASC if by_name.supports_direction else None,
 )
 ```
 
 Typed sorting is available on library listings and supported detail listings, including album,
 artist, genre, playlist and podcast contents, browse results, similar tracks and media versions.
-Pass `sort_direction` only when the selected option supports it. Omit either sort argument to use
-the listing's default.
+Pass `sort_direction` only when the selected option supports it; the server ignores it otherwise.
+Omit either sort argument to use the listing's default. A `sort_field` the listing does not offer
+fails with `InvalidDataError`.
 
 ## Pagination and filtering
 
@@ -80,7 +86,8 @@ for details.
 ## Playback sorting
 
 `player_queues/play_media` accepts `sort_field` and `sort_direction` to order album or playlist
-tracks before applying `start_item`. Use the same sort field offered by the corresponding listing.
+tracks before applying `start_item`. Use the same sort field offered by the corresponding listing;
+any other field fails with `InvalidDataError`.
 The deprecated `sort_by` string is retained for older clients only.
 
 ## Migration
