@@ -7,6 +7,7 @@ site_url: https://developers.music-assistant.io/
 nav:
   - Home: index.md
   - Provider setup flows: setup-flows.md
+  - Listing contract: listing-contract.md
 
 theme:
   custom_dir: overrides
