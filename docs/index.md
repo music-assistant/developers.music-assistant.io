@@ -1,6 +1,8 @@
 Developer docs
 ==================================
 
+A provider can live in the server repository, where it ships with every Music Assistant server, or in a repository of your own, from which servers install it through the community catalog. [Building a provider](building-a-provider.md) tells what each place asks and how to build a provider in your own repository. This page sets up the server repository and describes building a provider inside it.
+
 ## 📝 Prerequisites
 
 - ffmpeg (minimum version 6.1, version 7 recommended), must be available in the path so install at OS level
