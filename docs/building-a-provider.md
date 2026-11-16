@@ -95,8 +95,8 @@ What a release has to look like:
 - the icon is optional: an SVG of at most 5 KB that only draws; an icon that does not pass is
   left out.
 
-The [registry's README](https://github.com/music-assistant/community-catalog#for-provider-maintainers)
-lists the limits.
+The registry lists the exact limits in
+[What a provider needs](https://github.com/music-assistant/community-catalog/blob/main/MAINTAINING.md#what-a-provider-needs).
 
 Once installed, a provider runs inside the user's server. It never writes into its own folder:
 the server checks that folder against the release and replaces it when it differs. Options are
@@ -153,10 +153,14 @@ provider up and does not run your tests.
 
 ## Joining the community catalog
 
-You ask for admission with a pull request on the registry that adds one file,
-`providers/<domain>/provider.json`: where your provider lives and who maintains it. Whoever opens
-it, and every maintainer it names, must own the repository or be a code owner in the manifest of
-its latest release, and that release must pass the checks on at least one server line. The
+You submit your provider with the form
+[Submit a provider](https://github.com/music-assistant/community-catalog/issues/new?template=submit-provider.yml):
+its repository, and only when needed the folder and the tag prefix. The person who submits it must
+own the repository or be a code owner in the manifest of its latest release, and that release must
+pass the checks on at least one server line. The result of the checks appears as a comment on the
+issue. When every check passes, a registry maintainer reviews the provider against the rules and
+decides. The owner of the repository and the code owners in the manifest are the maintainers of
+the provider. The
 [registry's README](https://github.com/music-assistant/community-catalog#admission) tells the rest.
 
 ## What the nightly test reports
