@@ -41,8 +41,9 @@ it:
 
 - a public repository with an open source licence;
 - releases that pass the automated checks;
-- a domain of its own (the `domain` in the provider's `manifest.json`, its identifier): not one
-  the server uses or reserves, and not one another community provider has;
+- a `domain` of its own (the unique id of the provider in its `manifest.json`, such as
+  `sample_music`, not a domain name): not one the server uses or reserves, and not one another
+  community provider has;
 - a provider that crosses none of the red lines below.
 
 A person decides once, at admission, about what the provider does. The code is not reviewed, and
@@ -165,17 +166,22 @@ the provider. The
 
 ## What the nightly test reports
 
-Every night the registry takes the most recently published release of each listed provider, when
-it has not seen it before, and checks it. It also tests the newest versions of each provider again
-against the current server of every server line it tests: the nightly, the beta and the newest
-stable line.
+You release whenever you want: publish a GitHub release, and nothing else is needed. The registry
+looks for new releases once a night: it takes the most recently published release of each listed
+provider, when it has not seen it before, and checks it. It also tests the newest versions of each
+provider again against the current server of every server line it tests: the nightly, the beta
+and the newest stable line.
 
 - A version that passes for a line is offered to the servers of that line.
 - A version that fails, or that stops loading on a line, is not offered there. Servers of that line
   that run it switch to the newest version that still passes there; when none does, the provider
   stops loading there.
-- You get an issue on your repository with the reason and the output of the failing check, or on
-  the registry when your repository has issues switched off.
+- A release that is refused or fails, and a version that stops loading on a line, are reported in
+  one issue per provider on the
+  [registry](https://github.com/music-assistant/community-catalog/issues?q=label%3Arelease-check),
+  with the label `release-check`, the reason and the output of the failing check. The issue
+  mentions the maintainers of the provider once, a later failure is added to it as a comment, and
+  it closes by itself when a later release passes.
 
 With a beta that runs for several weeks, you usually know about a problem well before a stable
 release reaches your users. To support the stable release and follow the nightly at the same time,
