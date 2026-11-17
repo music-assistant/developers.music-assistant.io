@@ -152,6 +152,55 @@ requirements against a server line, and loading the provider in the server image
 Loading installs the requirements and imports the module of the provider; it does not set the
 provider up and does not run your tests.
 
+### On a Music Assistant server
+
+Before you release, you can try your provider on a real Music Assistant server that fetches it
+from GitHub. This server runs the nightly build of Music Assistant, and the community catalog does
+not have to be enabled on it. Your repository must be public and hold the provider folder, as the
+template does. You name it in one of these forms:
+
+- `owner/repo`: its default branch;
+- `owner/repo@ref`: a branch, a tag or a commit;
+- `owner/repo@pr-12`: pull request 12 of that repository.
+
+The server fetches your repository again at every start, so a restart picks up new commits. Your
+provider then appears among the providers you can add, with the badge **Community**. When it does
+not, the log of the server tells why.
+
+Use a test server with data of its own, never the data of the server you use every day.
+
+#### On Home Assistant
+
+1. In the **App store** of Home Assistant, add the repository
+   `https://github.com/music-assistant/home-assistant-addon` when it is not there yet, and install
+   the **Music Assistant DEV SERVER** app.
+2. Stop the **Music Assistant** app if it runs: the two apps use the same network ports.
+3. In the **Configuration** tab of the DEV SERVER app, set **Provider repository** to your
+   repository, such as `your-github-handle/your-repository@my-branch`, and start the app.
+4. Select **Open Web UI** and add your provider.
+
+The DEV SERVER app keeps data of its own, apart from the Music Assistant app. Its **Log** tab shows
+the log of the server; set **Log Level** to `debug` for more detail. To go back, stop the DEV
+SERVER app and start the Music Assistant app again.
+
+#### On Docker
+
+Stop any other Music Assistant server on the machine first: both would use the same network ports.
+Then start the development image with your repository and a volume of its own:
+
+```sh
+docker run --rm --network host -v ma-dev-data:/data \
+  -e PROVIDER_REPO=your-github-handle/your-repository@my-branch \
+  ghcr.io/music-assistant/server:dev
+```
+
+- Open port 8095 of the machine in a browser and add your provider.
+- The container prints the log of the server; add `--log-level debug` after the image name for
+  more detail.
+- To restart, stop the container with Ctrl+C and run the command again.
+- To go back, stop the container and start your own server again.
+  - `docker volume rm ma-dev-data` removes the data of the test server.
+
 ## Joining the community catalog
 
 You submit your provider with the form
