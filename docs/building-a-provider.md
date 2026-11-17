@@ -148,7 +148,7 @@ CI runs the lint, the type check, the spelling check and your tests, and calls t
 reusable workflow
 [`check-provider.yml`](https://github.com/music-assistant/community-catalog/blob/main/.github/workflows/check-provider.yml),
 which runs the same checks the community catalog runs on a release: the manifest, the
-requirements against a server line, and loading the provider in the server image of that line.
+requirements against a channel, and loading the provider in the server image of that channel.
 Loading installs the requirements and imports the module of the provider; it does not set the
 provider up and does not run your tests.
 
@@ -207,7 +207,7 @@ You submit your provider with the form
 [Submit a provider](https://github.com/music-assistant/community-catalog/issues/new?template=submit-provider.yml):
 its repository, and only when needed the folder and the tag prefix. The person who submits it must
 own the repository or be a code owner in the manifest of its latest release, and that release must
-pass the checks on at least one server line. The result of the checks appears as a comment on the
+pass the checks on at least one channel. The result of the checks appears as a comment on the
 issue. When every check passes, a registry maintainer reviews the provider against the rules and
 decides. The owner of the repository and the code owners in the manifest are the maintainers of
 the provider. The
@@ -218,15 +218,15 @@ the provider. The
 You release whenever you want: publish a GitHub release, and nothing else is needed. The registry
 looks for new releases once a night: it takes the most recently published release of each listed
 provider, when it has not seen it before, and checks it. It also tests the newest versions of each
-provider again against the current server of every server line it tests: the nightly, the beta
-and the newest stable line.
+provider again against the current server of every channel it tests: the nightly, the beta and
+the newest stable channel.
 
-- A version that passes for a line is offered to the servers of that line.
-- A version that fails, or that stops loading on a line, is not offered there. Servers of that line
-  that run it switch to the newest version that still passes there; when none does, the provider
-  stops loading there.
-- A release that is refused or fails, and a version that stops loading on a line, are reported in
-  one issue per provider on the
+- A version that passes on a channel is offered to the servers on that channel.
+- A version that fails, or that stops loading on a channel, is not offered there. Servers on that
+  channel that run it switch to the newest version that still passes there; when none does, the
+  provider stops loading there.
+- A release that is refused or fails, and a version that stops loading on a channel, are reported
+  in one issue per provider on the
   [registry](https://github.com/music-assistant/community-catalog/issues?q=label%3Arelease-check),
   with the label `release-check`, the reason and the output of the failing check. The issue
   mentions the maintainers of the provider once, a later failure is added to it as a comment, and
