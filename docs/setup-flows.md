@@ -110,7 +110,7 @@ creds = await session.progress_until(
 
 ## Player setup flows
 
-Players use the same session API. A player provider implements the flow on its `PlayerProtocol`: a protocol that needs interaction (pairing PIN, password) overrides `run_setup_flow` and reports `needs_setup`/`setup_reason` (through `_attr_needs_setup`/`_attr_setup_reason`, or by overriding the properties), so the UI shows a *Setup required* chip on its player:
+Players use the same session API. A player provider implements the flow on its `PlayerProtocol`: a protocol that needs interaction (pairing PIN, password) overrides `run_setup_flow` and reports `needs_setup`/`setup_reason` (through `_attr_needs_setup`/`_attr_setup_reason`, or by overriding the properties). The UI shows a *Setup required* chip on its player as long as no protocol of that player is set up and can play:
 
 ```python
 class MyProtocol(PlayerProtocol):
@@ -123,6 +123,10 @@ class MyProtocol(PlayerProtocol):
 ```
 
 `config/players/setup` takes the id of the player and runs the flow of one of its protocols: the player's own protocol when that implements a flow, else the audio protocol that needs setup, or a picker when several do. When none needs setup, any audio protocol with a flow is offered, so a step the user skipped can be run again. The collected values persist to the setup data of that protocol.
+
+The protocol object stays the same after `session.finish()`: its `on_config_updated()` runs, where it reads the saved values with `self.get_setup_value(key)` and reports that it no longer needs setup. Call `self.update_state()` when what it reports changes at any other moment.
+
+How a protocol is registered and attached to its player is described in the provider guide of the [players controller README](https://github.com/music-assistant/server/blob/dev/music_assistant/controllers/players/README.md).
 
 Set `setup_reason` to a short slug. The UI shows a text of its own for `"pairing_required"` and `"password_required"` on the chip, and *Setup required* for any other reason.
 
