@@ -55,16 +55,18 @@ The community catalog declines a provider at admission, and blocks it when it is
 
 - music the user has no right to: getting around an account, a subscription tier or a region, or
   a source that offers music without the permission of its rights holders;
-- getting around copy protection;
+- getting around copy protection to give more than the service's own app gives the user's
+  account;
 - downloading or exporting music to keep it (a temporary cache used only for playback is fine);
 - harmful behaviour: sending the user's data anywhere but the service it connects to, loading
   code from somewhere else while it runs, or doing things its description does not mention;
 - a provider that mainly exists to load other providers, or lists of sources from third parties,
   from outside the community catalog.
 
-Allowed, at the user's own risk: a small audience, an unofficial API used with the user's own
-account, reading a service's public web pages, free public content in the quality a service
-offers without a subscription, and code that would not pass a review for the server. The
+Allowed, at the user's own risk: a small audience, working like the service's own app does for
+the user's own account (also by reverse engineering it: an unofficial API, or decoding protected
+audio to play it), reading a service's public web pages, free public content in the quality a
+service offers without a subscription, and code that would not pass a review for the server. The
 [community catalog rules](https://github.com/music-assistant/.github/blob/main/COMMUNITY_CATALOG_RULES.md)
 say it in full.
 
