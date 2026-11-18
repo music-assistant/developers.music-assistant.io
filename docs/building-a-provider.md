@@ -51,24 +51,10 @@ later releases reach users without anyone looking at them.
 
 ## The red lines
 
-The community catalog declines a provider at admission, and blocks it when it is found later, for:
-
-- music the user has no right to: getting around an account, a subscription tier or a region, or
-  a source that offers music without the permission of its rights holders;
-- getting around copy protection to give more than the service's own app gives the user's
-  account;
-- downloading or exporting music to keep it (a temporary cache used only for playback is fine);
-- harmful behaviour: sending the user's data anywhere but the service it connects to, loading
-  code from somewhere else while it runs, or doing things its description does not mention;
-- a provider that mainly exists to load other providers, or lists of sources from third parties,
-  from outside the community catalog.
-
-Allowed, at the user's own risk: a small audience, working like the service's own app does for
-the user's own account (also by reverse engineering it: an unofficial API, or decoding protected
-audio to play it), reading a service's public web pages, free public content in the quality a
-service offers without a subscription, and code that would not pass a review for the server. The
-[community catalog rules](https://github.com/music-assistant/.github/blob/main/COMMUNITY_CATALOG_RULES.md)
-say it in full.
+The community catalog declines a provider at admission, and blocks it when it is found later, when
+it crosses one of the red lines in the
+[community catalog rules](https://github.com/music-assistant/.github/blob/main/COMMUNITY_CATALOG_RULES.md),
+which also say what is allowed at the user's own risk.
 
 A server stops loading a blocked provider once its next daily check of the community catalog
 fetches the block; its users keep their settings and library. A blocked version is skipped the
@@ -88,7 +74,8 @@ fixture.
 
 What a release has to look like:
 
-- the provider is in a folder named after its domain;
+- the provider is in a folder named after its domain, `provider`, or `providers/<domain>` in a
+  repository with several providers;
 - the release is a GitHub release, not a pre-release, whose tag is the version with or without
   `v`, such as `v1.2.0`;
 - the requirements are package names with version specifiers, without URLs, markers or options,
@@ -158,8 +145,9 @@ provider up and does not run your tests.
 
 Before you release, you can try your provider on a real Music Assistant server that fetches it
 from GitHub. This server runs the nightly build of Music Assistant, and the community catalog does
-not have to be enabled on it. Your repository must be public and hold the provider folder, as the
-template does. You name it in one of these forms:
+not have to be enabled on it. Your repository must be public, with the provider in a folder named
+after its domain, `provider`, or `providers/<domain>` in a repository with several providers. You
+name it in one of these forms:
 
 - `owner/repo`: its default branch;
 - `owner/repo@ref`: a branch, a tag or a commit;
@@ -214,6 +202,18 @@ issue. When every check passes, a registry maintainer reviews the provider again
 decides. The owner of the repository and the code owners in the manifest are the maintainers of
 the provider. The
 [registry's README](https://github.com/music-assistant/community-catalog#admission) tells the rest.
+
+**Moving a provider from the server.** A code owner of a provider that ships with the server can
+move it to their own repository under the same domain: submit it with the box **Moving from the
+server** ticked. Once it is admitted, the team removes it from the server in the release whose
+community catalog offers it, and servers that use it then install your version and keep their
+settings. While the server still ships the domain, the test fixture and a server in dev mode do
+not load your copy: the server already has a provider by that name.
+
+**Providers without a maintainer.** A built-in provider whose maintainer no longer follows up is
+parked in a repository of the Music Assistant organisation and keeps being released through the
+community catalog. To take it over, say so on its issue "looking for a maintainer"; you then
+release it from your own repository under the same domain.
 
 ## What the nightly test reports
 

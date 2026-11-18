@@ -5,8 +5,8 @@ A provider can live in the server repository, where it ships with every Music As
 
 ## 📝 Prerequisites
 
-- ffmpeg (minimum version 6.1, version 7 recommended), must be available in the path so install at OS level
-- Python 3.12 is minimal required, 3.12 recommended (or check the pyproject for current required version)
+- ffmpeg (minimum version 8.0), must be available in the path so install at OS level
+- Python 3.14 is minimal required (the exact pinned runtime is in `.python-version` in the server repository)
 - [Python venv](https://docs.python.org/3/library/venv.html)
 
 We recommend developing on a (recent) macOS or Linux machine.
@@ -90,7 +90,7 @@ Create a file called `__init__.py` inside the folder of your provider. This file
 A Player Provider is the provider type that adds support for a 'target of playback' to Music Assistant. Sonos, Chromecast and AirPlay are examples of a Player Provider.
 All Providers (of all types) can be found in the `music_assistant/providers` folder.
 
-TIP: We have created a template/stub ["Demo Player Provider"](https://github.com/music-assistant/server/tree/dev/music_assistant/providers/_demo_player_provider) implementation" in `music_assistant/providers/_template_player_provider` to help get you started faster with building your own Player Provider for Music Assistant server!
+TIP: We have created a template/stub ["Demo Player Provider"](https://github.com/music-assistant/server/tree/dev/music_assistant/providers/_demo_player_provider) implementation in `music_assistant/providers/_demo_player_provider` to help get you started faster with building your own Player Provider for Music Assistant server!
 
 ## 💽 Building your own Metadata Provider
 
@@ -102,7 +102,7 @@ More information and template/stub demo metadata provider to follow.
 
 A Plugin Provider is the provider type that provides additional functionality to Music Assistant and most often it will interact with the existing core controllers and event logic. For example a music scrobbling plugin such as the [LastFM Scrobbler Plugin](https://www.music-assistant.io/plugins/lastfm_scrobble/) (that lets you [scrobble](https://www.collinsdictionary.com/dictionary/english/scrobble) songs and albums you listen to LastFM and LibreFM), or the [AirPlay Receiver Plugin](https://www.music-assistant.io/plugins/airplay-receiver/) (that enable you to add AirPlay Receiver audio support to any MA player), or the [Home Assistant Plugin Provider](https://www.music-assistant.io/ha-plugin/) (that provides a connection from the Music Assistant integration running in Home Assistant to Music Assistant server that allow exposing HA players so that they become visible in MA).
 
-More information and template/stub demo plugin provider to follow.
+TIP: We have created a template/stub ["Demo Plugin Provider"](https://github.com/music-assistant/server/tree/dev/music_assistant/providers/_demo_plugin_provider) implementation in `music_assistant/providers/_demo_plugin_provider` to help get you started faster with building your own Plugin Provider for Music Assistant server!
 
 ## ⚙️ Manifest file
 
@@ -110,13 +110,15 @@ The manifest file contains metadata and configuration about a provider. The supp
 
 | Name  | Description  | Type  |
 |---|---|---|
-| type  | `music`, `player`, `metadata` or `plugin`  | string  |
+| type  | `music`, `player`, `metadata`, `plugin` or `audio_analysis`  | string  |
 | domain  | The internal unique id of the provider, e.g. `spotify` or `ytmusic`  | string  |
 | name  | The full name of the provider, e.g. `Spotify` or `Youtube Music`  | string  |
 | description  | The full description of the provider  | string  |
 | codeowners  | List of Github names of the codeowners of the provider  | array[string]  |
-| requirements | List of requirements for the provider in pip string format. Supported values are `package==version` and `git+https://gitrepoforpackage` | array[string]
-| documentation | URL to the Github discussion containing the documentation for the provider. | string |
-| multi_instances | Whether multiple instances of the configuration are supported, e.g. multiple user accounts for Spotify | boolean |
+| requirements | Python packages the provider needs, in standard pip / [PEP 508](https://peps.python.org/pep-0508/) requirement syntax, e.g. `package==version`, a version range, an extras marker, or a `git+https://…` direct reference | array[string] |
+| documentation | URL to the provider's documentation page. | string |
+| multi_instance | Whether multiple instances of the provider are supported, e.g. multiple user accounts for Spotify | boolean |
+
+This table lists the main properties; the [developer guide of the server](https://github.com/music-assistant/server/blob/dev/DEVELOPMENT.md#%EF%B8%8F-manifest-file) has the full, current table.
 
 Provider configuration is not declared in the manifest: interactive setup (credentials, OAuth, pairing) is authored as a [setup flow](setup-flows.md), and runtime options are declared in code by overriding `get_config_entries()` — see [Provider setup flows](setup-flows.md).
