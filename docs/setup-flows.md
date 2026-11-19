@@ -59,7 +59,7 @@ Everything the user sees is translatable — see [Translations](#translations).
 
 - `kind` — `"setup"` (new) or `"reconfigure"` (existing target)
 - `reason` — `"user"`, `"auth"` (re-auth needed) or `"error"` (target failed to load)
-- `instance_id` / `player_id` — the existing target, for reconfigure and player flows
+- `instance_id` / `player_id` — the existing target, for reconfigure and player flows; in a player flow `player_id` is the id of the protocol whose flow runs
 - `setup_data` — the decrypted values from a previous run, for prefill
 - `values` — the target's current options values
 
@@ -110,10 +110,10 @@ creds = await session.progress_until(
 
 ## Player setup flows
 
-Players use the same session API. A player that needs interaction (pairing PIN, password) overrides `run_setup_flow` on its `Player` class and sets `needs_setup`/`setup_reason` so the UI shows a *Setup required* chip:
+Players use the same session API. A player provider implements the flow on its `PlayerProtocol`: a protocol that needs interaction (pairing PIN, password) overrides `run_setup_flow` and reports `needs_setup`/`setup_reason` (through `_attr_needs_setup`/`_attr_setup_reason`, or by overriding the properties). The UI shows a *Setup required* chip on its player as long as no protocol of that player is set up and can play:
 
 ```python
-class MyPlayer(Player):
+class MyProtocol(PlayerProtocol):
     async def run_setup_flow(self, session: SetupSession) -> None:
         pin_entry = [ConfigEntry(key="pin", type=ConfigEntryType.STRING, label="PIN", required=True)]
         await self._start_pairing()
@@ -122,9 +122,13 @@ class MyPlayer(Player):
         await session.finish({"credentials": self._credentials})
 ```
 
-Wrapper players (universal players, native players wrapping protocol children) need no code: the engine delegates to the child that needs setup, or shows a picker when several do. The collected values persist to the child's own config.
+`config/players/setup` takes the id of the player and runs the flow of one of its protocols: the player's own protocol when that implements a flow, else the audio protocol that needs setup, or a picker when several do. When none needs setup, any audio protocol with a flow is offered, so a step the user skipped can be run again. The collected values persist to the setup data of that protocol.
 
-Set `setup_reason` to a short slug (`"pairing_required"`, `"password_required"`, `"auth_expired"`) — it resolves against the provider's translations and is shown on the chip.
+The protocol object stays the same after `session.finish()`: its `on_config_updated()` runs, where it reads the saved values with `self.get_setup_value(key)` and reports that it no longer needs setup. Call `self.update_state()` when what it reports changes at any other moment.
+
+How a protocol is registered and attached to its player is described in the provider guide of the [players controller README](https://github.com/music-assistant/server/blob/dev/music_assistant/controllers/players/README.md).
+
+Set `setup_reason` to a short slug. The UI shows a text of its own for `"pairing_required"` and `"password_required"` on the chip, and *Setup required* for any other reason.
 
 ## Translations
 
