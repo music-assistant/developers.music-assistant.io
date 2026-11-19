@@ -76,6 +76,7 @@ Create a file called `__init__.py` inside the folder of your provider. This file
 - The `setup()` function is called by Music Assistant upon initialization of the provider. It gives you the opportunity the prepare the provider for usage.
 - Anything interactive (credentials, OAuth logins, pairing) belongs in a [setup flow](setup-flows.md); runtime options are declared by overriding `get_config_entries()` on the provider.
 - A provider should let Music Assistant know which [`ProviderFeature`](https://github.com/music-assistant/models/blob/main/music_assistant_models/enums.py) it supports by implementing the property `supported_features`, which returns a list of `ProviderFeature`.
+- List the media types the provider offers whatever its config in the `media_types` of its manifest: the media type of each `LIBRARY_*` feature it always offers, plus those it only delivers through search or browse, such as `radio` for a radio directory.
 - The actual playback of audio in Music Assistant happens in two phases:
     1. `get_stream_details()` is called to obtain information about the audio, like the quality, format, # of channels etc.
     2. `get_audio_stream()` is called to stream raw bytes of audio to the player. There are a few [helpers](https://github.com/music-assistant/server/blob/dev/music_assistant/helpers/audio.py) to help you with this. Note that this function is not applicable to direct url streams.
@@ -118,6 +119,7 @@ The manifest file contains metadata and configuration about a provider. The supp
 | requirements | Python packages the provider needs, in standard pip / [PEP 508](https://peps.python.org/pep-0508/) requirement syntax, e.g. `package==version`, a version range, an extras marker, or a `git+https://…` direct reference | array[string] |
 | documentation | URL to the provider's documentation page. | string |
 | multi_instance | Whether multiple instances of the provider are supported, e.g. multiple user accounts for Spotify | boolean |
+| media_types | Optional: the media types the provider offers whatever its config, e.g. `track` or `radio` for a music provider, or `audio_source` for a provider that plays audio into Music Assistant. The app labels the provider with them in Settings and the Marketplace, also before it is set up. | array[string] |
 
 This table lists the main properties; the [developer guide of the server](https://github.com/music-assistant/server/blob/dev/DEVELOPMENT.md#%EF%B8%8F-manifest-file) has the full, current table.
 
