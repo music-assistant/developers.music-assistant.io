@@ -9,6 +9,7 @@ nav:
   - Building a provider: building-a-provider.md
   - Provider setup flows: setup-flows.md
   - Listing contract: listing-contract.md
+  - Statistics API: statistics.md
 
 theme:
   custom_dir: overrides
